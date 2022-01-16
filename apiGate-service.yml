@@ -1,0 +1,91 @@
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:9090/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+server:
+  port: 4066
+spring:
+  application:
+    name: apiGate-service 
+  cloud:
+    gateway:
+      routes:
+      - id: Account-service
+        uri: lb://Account-service
+        predicates:
+        - Path=/Account/**
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: account-service
+            fallbackuri: forward:/accountFail
+      - id: Customer-service
+        uri: lb://Customer-service
+        predicates:
+        - Path=/Customer/**
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: customer-service
+            fallbackuri: forward:/customerFail
+      - id: Manager-service
+        uri: lb://Manager-service
+        predicates:
+        - Path=/Manager/**
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: manager-service
+            fallbackuri: forward:/managerFail
+      - id: Service-Regisrty
+        uri: lb://Service-Regisrty
+        predicates:
+        - Path=/**   
+      - id: Email-service
+        uri: lb://Email-service
+        predicates:
+        - Path=/**
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: email-service
+            fallbackuri: forward:/emailFail
+      - id: Report-service
+        uri: lb://Report-service
+        predicates:
+        - Path=/Report/**
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: Report-service
+            fallbackuri: forward:/reportFail
+      - id: Transaction-service
+        uri: lb://Transaction-service
+        predicates:
+        - Path=/Transaction/**
+        filters:
+        - name: CircuitBreaker
+          args:
+            name: transaction-service
+            fallbackuri: forward:/TransactionFail
+      discovery:
+        locator:
+          lower-case-service-id: true
+          enabled: true
+
+
+hystrix:  
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 100000
+
