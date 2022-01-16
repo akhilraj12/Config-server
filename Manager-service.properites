@@ -9,14 +9,6 @@ spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL8Dialect
 
-eureka.client.service-url.defaultZone = http://localhost:9090/eureka/
 
-spring.rabbitmq.addresses=amqps://qokzgsbx:xxIfnTBSxNXlIipGi848Bzf6uTXpyh64@puffin.rmq2.cloudamqp.com/qokzgsbx
-management.endpoints.web.exposure.include=*
-
-eureka.client.register-with-eureka=true
-eureka.client.fetch-registry=true
-eureka.instance.prefer-ip-address=true
-eureka.instance.hostname=localhost
 
 spring.application.name=Manager-service
