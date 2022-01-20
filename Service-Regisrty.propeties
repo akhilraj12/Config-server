@@ -1,0 +1,5 @@
+spring.application.name=Service-Regisrty
+
+eureka.client.register-with-eureka=false
+eureka.client.fetchRegistry=false
+eureka.server.max-threads-for-peer-replication=0
