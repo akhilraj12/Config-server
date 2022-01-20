@@ -8,9 +8,11 @@ management:
   endpoints:
     web:
       exposure:
-        include: hystrix.stream
+        include: "*"
+            
 server:
   port: 4066
+  
 spring:
   application:
     name: apiGate-service 
@@ -74,12 +76,13 @@ spring:
         - name: CircuitBreaker
           args:
             name: transaction-service
-            fallbackuri: forward:/TransactionFail
+            fallbackuri: forward:/TransactionFail 
       discovery:
         locator:
           lower-case-service-id: true
           enabled: true
-
+  main:
+    allow-bean-definition-overriding: true
 
 hystrix:  
   command:
@@ -87,5 +90,6 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 100000
+            timeout-in-milliseconds: 5000
+
 
